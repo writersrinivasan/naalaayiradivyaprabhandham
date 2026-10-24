@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #fff8ec;
+  --paper: #fffdf7;
+  --ink: #3b1d0f;
+  --muted: #7a5a44;
+  --saffron: #f97316;
+  --vermilion: #dc2626;
+  --maroon: #7f1d1d;
+  --turmeric: #f59e0b;
+  --gold: #d4a017;
+  --peacock: #0e7490;
+  --krishna: #1e3a8a;
+  --leaf: #15803d;
+  --line: #f1dcc0;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-saffron: var(--saffron);
+  --color-vermilion: var(--vermilion);
+  --color-maroon: var(--maroon);
+  --color-turmeric: var(--turmeric);
+  --color-gold: var(--gold);
+  --color-peacock: var(--peacock);
+  --color-krishna: var(--krishna);
+  --color-leaf: var(--leaf);
+  --color-line: var(--line);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-verse: var(--font-verse);
+  --font-hand: var(--font-hand);
+  --font-num: var(--font-num);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  line-height: 1.75;
+}
+
+/* Kolam dot grid used behind sections */
+.kolam-bg {
+  background-color: var(--cream);
+  background-image: radial-gradient(circle at 1px 1px, rgba(212, 160, 23, 0.28) 1.2px, transparent 0);
+  background-size: 22px 22px;
+}
+
+/* Temple-border stripe: saffron / white / vermilion like a kumkum-chandan band */
+.temple-band {
+  background: repeating-linear-gradient(90deg, var(--vermilion) 0 14px, var(--turmeric) 14px 28px, #fff 28px 32px, var(--saffron) 32px 46px, #fff 46px 50px);
+  height: 8px;
+}
+
+.gopuram-mask {
+  clip-path: polygon(0 100%, 6% 70%, 12% 70%, 18% 45%, 24% 45%, 30% 22%, 36% 22%, 42% 6%, 58% 6%, 64% 22%, 70% 22%, 76% 45%, 82% 45%, 88% 70%, 94% 70%, 100% 100%);
+}
+
+.verse {
+  font-family: var(--font-verse), serif;
+  line-height: 2.1;
+  letter-spacing: 0.01em;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 0 rgba(127, 29, 29, 0.04), 0 12px 32px -18px rgba(127, 29, 29, 0.25);
+}
+
+.glow-ring {
+  box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.12), 0 0 60px 10px rgba(245, 158, 11, 0.25);
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 40s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes flame {
+  0%, 100% { transform: scaleY(1); opacity: 0.95; }
+  50% { transform: scaleY(1.12); opacity: 1; }
+}
+.flame {
+  animation: flame 1.8s ease-in-out infinite;
+  transform-origin: bottom center;
+  transform-box: fill-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin-slow, .float, .flame { animation: none; }
+}
+
+::selection {
+  background: rgba(249, 115, 22, 0.25);
+}
