@@ -118,3 +118,62 @@ body {
 ::selection {
   background: rgba(249, 115, 22, 0.25);
 }
+
+/* ---------- Reader ---------- */
+.reader-verse {
+  font-size: var(--reader-size, 21px);
+  line-height: 1.95;
+}
+.reader-hide-en .reader-en {
+  display: none;
+}
+
+/* ---------- Print / PDF ---------- */
+@page {
+  size: A4;
+  margin: 16mm 15mm 18mm;
+  @bottom-center {
+    content: counter(page);
+    font-size: 9pt;
+    color: #7a5a44;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+    font-size: 10.5pt;
+  }
+  .kolam-bg {
+    background-image: none;
+  }
+  .card {
+    box-shadow: none;
+  }
+  .reader-verse {
+    font-size: 12.5pt;
+    line-height: 1.75;
+  }
+  .verse-block {
+    break-inside: avoid;
+    padding-top: 7pt;
+    padding-bottom: 7pt;
+  }
+  .print-break {
+    break-before: page;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+@media print {
+  .glow-ring {
+    box-shadow: none;
+  }
+  .flame,
+  .float,
+  .spin-slow {
+    animation: none;
+  }
+}

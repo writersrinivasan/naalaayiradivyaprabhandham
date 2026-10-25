@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 const NAV = [
   ["/", "முகப்பு"],
   ["/azhwars", "ஆழ்வார்கள்"],
+  ["/read", "படிக்க"],
   ["/prabandham", "பிரபந்தங்கள்"],
   ["/infographics", "தகவல் வரைபடம்"],
   ["/search", "தேடல்"],
@@ -27,8 +28,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ta">
       <body className={`${display.variable} ${body.variable} ${verse.variable} ${hand.variable} ${num.variable} antialiased`}>
-        <div className="temple-band" />
-        <header className="sticky top-0 z-30 border-b border-line bg-cream/90 backdrop-blur">
+        <div className="temple-band print:hidden" />
+        <header className="sticky top-0 print:hidden z-30 border-b border-line bg-cream/90 backdrop-blur">
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2">
             <Link href="/" className="flex items-center gap-2">
               <span className="flex items-end">
@@ -57,7 +58,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </nav>
         </header>
         <main className="min-h-[70vh]">{children}</main>
-        <footer className="mt-16 border-t border-line bg-gradient-to-b from-orange-50 to-amber-100">
+        <footer className="mt-16 border-t print:hidden border-line bg-gradient-to-b from-orange-50 to-amber-100">
           <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-muted">
             <p className="font-hand text-xl text-maroon">“செந்தமிழ் பாடுவார் தேவர்கள் போற்றுவார்”</p>
             <p className="mt-4">

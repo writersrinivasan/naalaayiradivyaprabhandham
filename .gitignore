@@ -41,3 +41,4 @@ yarn-error.log*
 next-env.d.ts
 data/ai-cache/
 !.env.example
+/.next-pdf/

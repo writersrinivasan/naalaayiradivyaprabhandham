@@ -26,8 +26,8 @@ export default function Home() {
           </h1>
           <p className="mt-4 text-lg text-muted sm:text-xl">பன்னிரு ஆழ்வார்கள் அருளிய நான்காயிரம் தமிழ்ப் பாசுரங்கள் — பொருளுடன், கதைகளுடன், தகவல் வரைபடங்களுடன்</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link href="/prabandham" className="rounded-full bg-gradient-to-r from-vermilion to-saffron px-6 py-2.5 font-semibold text-white shadow-lg shadow-orange-300/50 hover:scale-105 transition">
-              பாசுரங்களைப் படிக்க
+            <Link href="/read" className="rounded-full bg-gradient-to-r from-vermilion to-saffron px-6 py-2.5 font-semibold text-white shadow-lg shadow-orange-300/50 hover:scale-105 transition">
+              📖 4000 பாசுரங்களையும் படிக்க
             </Link>
             <Link href="/azhwars" className="rounded-full border-2 border-maroon/30 bg-white/70 px-6 py-2.5 font-semibold text-maroon hover:bg-white">
               ஆழ்வார்கள் கதைகள்

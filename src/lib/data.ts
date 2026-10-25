@@ -64,6 +64,17 @@ export function groupByPathigam(verses: Pasuram[]) {
   return [...groups.entries()];
 }
 
+/** Public URL of a pre-built PDF (see scripts/build_pdfs.mjs), or null when it hasn't been generated. */
+export function pdfFor(name: string) {
+  const file = path.join(process.cwd(), "public", "pdf", `${name}.pdf`);
+  try {
+    const { size } = fs.statSync(file);
+    return { href: `/pdf/${name}.pdf`, mb: size / 1024 / 1024 };
+  } catch {
+    return null;
+  }
+}
+
 export function search(query: string, limit = 60) {
   const q = query.trim().replace(/\s+/g, "");
   if (!q) return [];

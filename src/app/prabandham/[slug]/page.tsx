@@ -4,7 +4,7 @@ import { BarList, StatTile } from "@/components/Charts";
 import { azhwarBySlug } from "@/content/azhwars";
 import { AYIRAM_COLORS } from "@/content/derived";
 import { prabandhamBySlug } from "@/content/prabandhams";
-import { getPrabandhamVerses, getStats, groupByPathigam } from "@/lib/data";
+import { getPrabandhamVerses, getStats, groupByPathigam, pdfFor } from "@/lib/data";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -22,6 +22,7 @@ export default async function PrabandhamPage({ params, searchParams }: { params:
   const verses = getPrabandhamVerses(p.slug);
   const s = getStats().byPrabandham[p.slug];
   const color = AYIRAM_COLORS[p.ayiram];
+  const pdf = pdfFor(p.slug);
 
   // Three-level refs (pathu.thirumozhi.pasuram) get pathu tabs so a page stays light.
   const threeLevel = verses[0].ref.split(".").length === 3;
@@ -44,6 +45,16 @@ export default async function PrabandhamPage({ params, searchParams }: { params:
             {az.glyph} {az.name}
           </Link>
           <p className="mt-4 max-w-3xl text-lg">{p.about}</p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link href={`/read/${p.slug}${pathu ? `?pathu=${pathu}` : ""}`} className="rounded-full bg-maroon px-5 py-2 font-semibold text-white hover:bg-vermilion">
+              📖 முழுமையாகப் படிக்க
+            </Link>
+            {pdf && (
+              <a href={pdf.href} download className="rounded-full bg-white px-5 py-2 font-semibold text-maroon ring-1 ring-line hover:bg-orange-50">
+                ⬇ PDF ({pdf.mb < 1 ? `${Math.round(pdf.mb * 1024)} KB` : `${pdf.mb.toFixed(1)} MB`})
+              </a>
+            )}
+          </div>
         </div>
       </header>
 

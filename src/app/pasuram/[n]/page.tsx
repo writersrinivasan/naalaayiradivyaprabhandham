@@ -119,6 +119,15 @@ export default async function PasuramPage({ params }: { params: Promise<{ n: str
         </section>
       )}
 
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+        <Link
+          href={`/read/${p.slug}${v.ref.split(".").length === 3 ? `?pathu=${v.ref.split(".")[0]}` : ""}#p-${v.n}`}
+          className="rounded-full bg-maroon px-5 py-2 text-sm font-semibold text-white hover:bg-vermilion"
+        >
+          📖 {p.name} — தொடர்ந்து படிக்க
+        </Link>
+      </div>
+
       <AgentPanel n={v.n} color={az.color} />
 
       <nav className="mt-10 grid grid-cols-2 gap-4">

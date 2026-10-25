@@ -4,6 +4,8 @@ A Next.js 15 web app for all 4000 pasurams of the twelve Azhwars, plus Ramanuja 
 
 - English translation and a word-by-word glossary for about 3,450 verses
 - Tamil life stories of every Azhwar (`src/content/azhwars.ts`)
+- A full reader at `/read` for all 4000 pasurams. It has adjustable text size, an English on/off toggle, "continue reading", and a progress count of verses read. Progress is stored in the browser.
+- Downloadable PDFs: one per prabandham (Tamil + English) and the complete book (Tamil)
 - Infographics for the whole collection: verses per Azhwar and prabandham, Divya Desams, avatars, the twelve names, Thiruvaymozhi panns, sangu and chakram mentions
 - A **LangGraph** agent on every pasuram page that uses a Groq-hosted model, with a key each visitor brings (BYOK), to write a Tamil பொழிப்புரை, பதவுரை and விளக்கவுரை, and to produce emotion and theme meters, story context, characters, places, a short lesson and a quiz
 
@@ -59,3 +61,16 @@ python3 scripts/build_data.py --tei /tmp/ndp --pann <with_pann.xlsx> --nopann <w
 Numbering follows the standard 1–4000 scheme. The two Thirumadals are split into couplets (78 + 148). Ramanuja Nootrandhadi is numbered 4001–4108. Places, avatars and symbols are detected by keyword matching, so their counts are approximate.
 
 Neither source repository states a license. Check with the authors before you publish this data.
+
+## PDFs (`public/pdf/`)
+
+Most PDF libraries misplace Tamil vowel signs (ெ, ே, ை), so the PDFs are printed from the reader pages with headless Chrome instead. The print stylesheet adds a cover page, page numbers and A4 layout. To regenerate them after changing the data or the layout:
+
+```bash
+NEXT_DIST_DIR=.next-pdf npm run build
+NEXT_DIST_DIR=.next-pdf npx next start -p 3123 &
+node scripts/build_pdfs.mjs --base http://localhost:3123          # all 26 files
+node scripts/build_pdfs.mjs --base http://localhost:3123 --only thiruppavai
+```
+
+The script looks for Chrome in the usual locations, or in `CHROME_PATH` if you set it. The separate `NEXT_DIST_DIR` lets this production server run alongside `npm run dev`. Every reader page also has a print button (அச்சிடு), so visitors can save any section as a PDF from their browser.
