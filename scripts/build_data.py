@@ -290,6 +290,28 @@ def proportional(lines, count):
     return [lines[round(i * len(lines) / count):round((i + 1) * len(lines) / count)] for i in range(count)]
 
 
+# Errors in the sources: these verses are copies of other verses there. Each is replaced with the
+# correct text (xlsx row in the "without pann" file, or literal lines). The replacement has no
+# translation or glossary, because the ones in the source belong to the duplicated verse.
+CORRECTIONS = {
+    # TPa9.xml duplicates TPa8
+    ("thiruppavai", "9"): ("nopann", 8),
+    # ITA28-30.xml duplicate Moondram Thiruvandhadi 28-30 (the andhadi chain from verse 27 confirms it)
+    ("irandam-thiruvandhadi", "28"): ("nopann", 200),
+    ("irandam-thiruvandhadi", "29"): ("nopann", 201),
+    ("irandam-thiruvandhadi", "30"): ("nopann", 202),
+    # TV86.xml duplicates TV85
+    ("thiruviruttam", "86"): ("nopann", 474),
+    # with-pann row 803 duplicates 9.5.3; text from Project Madurai (pmuni0517_02, verse 3594)
+    ("thiruvaymozhi", "8.3.10"): [
+        "கலக்கம் இல்லா நல் தவ முனிவர் கரை கண்டோர்",
+        "துளக்கம் இல்லா வானவர் எல்லாம் தொழுவார்கள்",
+        "மலக்கம் எய்த மா கடல் தன்னைக் கடைந்தானை",
+        "உலக்க நாம் புகழ்கிற்பது என் செய்வது உரையீரே",
+    ],
+}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tei", required=True)
@@ -346,6 +368,12 @@ def main():
                 verses = list(hamburg.values())
 
         assert len(verses) == expected, (slug, len(verses), expected)
+        for v in verses:
+            fix = CORRECTIONS.get((slug, v["ref"]))
+            if fix is None:
+                continue
+            lines = [clean_line(x) for x in nopann_df.song[fix[1]].split("\n") if x.strip()] if isinstance(fix, tuple) else fix
+            v.update(ta=lines, en=[], gloss=[], corrected=True)
         for j, v in enumerate(verses):
             v["n"] = start + j
             v.update(tag(v["ta"]))
@@ -365,6 +393,11 @@ def main():
         with open(os.path.join(a.out, "pasurams", f"{slug}.json"), "w", encoding="utf-8") as fh:
             json.dump(ordered, fh, ensure_ascii=False, separators=(",", ":"))
         print(f"{slug:28s} {expected:5d}  translated={stats['byPrabandham'][slug]['withTranslation']}")
+
+    texts = Counter("".join(open_verse["ta"]).replace(" ", "") for f in os.listdir(os.path.join(a.out, "pasurams"))
+                    for open_verse in json.load(open(os.path.join(a.out, "pasurams", f), encoding="utf-8")))
+    dupes = [t[:40] for t, c in texts.items() if c > 1 and len(t) > 20]
+    assert not dupes, f"duplicate verse texts: {dupes}"
 
     leftovers = Counter(ch for row in index for ch in row[3] if "a" <= ch <= "z" or ch in "āīūēōṉṟḷḻṇṭṅñ")
     if leftovers:

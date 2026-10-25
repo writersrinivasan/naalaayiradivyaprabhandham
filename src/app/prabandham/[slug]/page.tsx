@@ -49,6 +49,11 @@ export default async function PrabandhamPage({ params, searchParams }: { params:
             <Link href={`/read/${p.slug}${pathu ? `?pathu=${pathu}` : ""}`} className="rounded-full bg-maroon px-5 py-2 font-semibold text-white hover:bg-vermilion">
               📖 முழுமையாகப் படிக்க
             </Link>
+            {p.slug === "thiruppavai" && (
+              <Link href="/natyam" className="rounded-full bg-gradient-to-r from-pink-700 to-rose-500 px-5 py-2 font-semibold text-white">
+                💃 நாட்டிய வடிவில்
+              </Link>
+            )}
             {pdf && (
               <a href={pdf.href} download className="rounded-full bg-white px-5 py-2 font-semibold text-maroon ring-1 ring-line hover:bg-orange-50">
                 ⬇ PDF ({pdf.mb < 1 ? `${Math.round(pdf.mb * 1024)} KB` : `${pdf.mb.toFixed(1)} MB`})
